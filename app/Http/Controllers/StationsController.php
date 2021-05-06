@@ -7,40 +7,105 @@ use App\Stations;
 
 class StationsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $stations = Stations::latest()->get();
-
-        return response(['data' => $stations ], 200);
+        $na = Stations::orderBy('id', 'desc')->paginate(5);
+        return view('stations.index',compact('na'));
     }
 
-    public function store(StationsRequest $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $stations = Stations::create($request->all());
-
-        return response(['data' => $stations ], 201);
+        return view('stations.create');
 
     }
 
-    public function show($id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $stations = Stations::findOrFail($id);
+        $request->validate([
+            'station_name' => 'required',
+            'station_mon_ip' => 'required',
+            'station_max_cpe' => 'required',
+            'station_max_ap' => 'required',
+            'connection_type' => 'required',
+            'server' => 'required',
+            'community' => 'required',
+        ]);
+        Nas::create($request->all());
 
-        return response(['data', $stations ], 200);
+        return redirect()->route('stations.index')
+            ->with('success','istasyon has been successfully added.');
+
     }
 
-    public function update(StationsRequest $request, $id)
-    {
-        $stations = Stations::findOrFail($id);
-        $stations->update($request->all());
 
-        return response(['data' => $stations ], 200);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Stations  $stations
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Stations $na)
+    {
+        return view('stations.edit', compact('na'));
+
     }
 
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Nas  $stations
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Stations $na)
     {
-        Stations::destroy($id);
+        $request->validate([
+            'station_name' => 'required',
+            'station_mon_ip' => 'required',
+            'station_max_cpe' => 'required',
+            'station_max_ap' => 'required',
+            'connection_type' => 'required',
+            'server' => 'required',
+            'community' => 'required',
+        ]);
 
-        return response(['data' => null ], 204);
+        $na->update($request->all());
+
+        return redirect()->route('stations.index')
+            ->with('success','Nas updated successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Stations  $stations
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(stations $na)
+    {
+        $na->delete();
+        return redirect()->route('stations.index')->with('success', 'Nas deleted successfully');
+
     }
 }

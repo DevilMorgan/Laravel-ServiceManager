@@ -68,4 +68,8 @@ Route::group(
     Route::get('/users/{user}/changepassword', 'Auth\ChangePasswordController@edit')->name('change.password');
     Route::post('/users/{user}/updatepassword', 'Auth\ChangePasswordController@update')->name('update.password');
     Route::delete('users/delete/all', 'UserController@destroyAll')->name('users.destroy-all');
+
+    // Stations
+    Route::resource('stations', 'StationsController');
+    Route::delete('stations/delete/all', 'StationsController@destroyAll')->name('stations.destroy-all');
 });
