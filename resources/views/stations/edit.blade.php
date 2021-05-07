@@ -30,8 +30,8 @@
                         <div class="m-portlet__body">
                             <div class="m-form__section m-form__section--first">
 
-                                @if(!empty($provider->screenshoot))
-                                    <img src="{{$provider->screenshoot}}" style="max-width: 100%;">
+                                @if(!empty($stations->screenshoot))
+                                    <img src="{{$station->screenshoot}}" style="max-width: 100%;">
                                 @endif
 
                             </div>
@@ -54,17 +54,17 @@
 													<i class="flaticon-edit-1"></i>
 												</span>
                                 <h3 class="m-portlet__head-text">
-                                    {{__('messages.edit_provider')}}
+                                    {{__('messages.edit_station')}}
                                 </h3>
                             </div>
                         </div>
                     </div>
 
                     <!--begin::Form-->
-                    <form method="POST" action="{{route('providers.update', $provider)}}" class="m-form m-form--fit">
+                    <form method="POST" action="{{route('stations.update', $station)}}" class="m-form m-form--fit">
                         @csrf
                         @method('PATCH')
-                        @include('providers._form')
+                        @include('stations._form')
                     </form>
 
                     <!--end::Form-->

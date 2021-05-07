@@ -2,17 +2,17 @@
 
 @section('content')
     @component('components.title', ['back_url' => route('dashboard')])
-        {{__('messages.stations')}}
+        {{__('messages.providers')}}
     @endcomponent
 
     <!-- END: Subheader -->
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
             @component('components.tableHeader', [
-                'title' => __('messages.all_stations'),
+                'title' => __('messages.all_providers'),
                 'icon' => 'flaticon-interface-7',
-                'button' => __('messages.new_station'),
-                'url' => route('stations.create'),
+                'button' => __('messages.new_provider'),
+                'url' => route('providers.create'),
                 'newModal' => false,
                 'dataTarget' => '',
                 'moreAction' => false,
@@ -21,7 +21,7 @@
             <div class="m-portlet__body">
 
                 <!--begin: Datatable -->
-                <table id="stations_table" data-deleteall="{{route('stations.destroy-all')}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
+                <table id="providers_table" data-deleteall="{{route('providers.destroy-all')}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                     <thead>
                     <tr>
                         <th>Id</th>
